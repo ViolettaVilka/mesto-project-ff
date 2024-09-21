@@ -11,12 +11,13 @@
 const cardList = document.querySelector('.places__list');
 
 //Добавление карточки
-function createCard(cardData) {
+function createCard(cardData, deleteCard) {
     const template = document.getElementById('card-template');
     const cardElement = template.content.cloneNode(true);
 
     cardElement.querySelector('.card__title').textContent = cardData.name;
     cardElement.querySelector('.card__image').src = cardData.link;
+    cardElement.querySelector('.card__image').alt = cardData.name;
 
     const deleteButton = cardElement.querySelector('.card__delete-button');
     deleteButton.addEventListener('click', deleteCard);
