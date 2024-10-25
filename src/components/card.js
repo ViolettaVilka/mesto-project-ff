@@ -1,10 +1,11 @@
-export function createCard(cardData, deleteCard, likeCard, openModal) {
+export function createCard(cardData, deleteCard, likeCard, openModal, imagePopup, popupImage, captionElement) {
     const template = document.getElementById('card-template');
     const cardElement = template.content.cloneNode(true);
 
     cardElement.querySelector('.card__title').textContent = cardData.name;
-    cardElement.querySelector('.card__image').src = cardData.link;
-    cardElement.querySelector('.card__image').alt = cardData.name;
+    const imageElement = cardElement.querySelector('.card__image');
+    imageElement.src = cardData.link;
+    imageElement.alt = cardData.name;
 
     const deleteButton = cardElement.querySelector('.card__delete-button');
     deleteButton.addEventListener('click', deleteCard);
@@ -14,13 +15,9 @@ export function createCard(cardData, deleteCard, likeCard, openModal) {
         likeCard(likeButton);
     });
 
-    const imageElement = cardElement.querySelector('.card__image');
     imageElement.addEventListener('click', () => {
-        const imagePopup = document.querySelector('.popup_type_image');
-        const popupImage = imagePopup.querySelector('.popup__image');
-        const captionElement = imagePopup.querySelector('.popup__caption');
-
         popupImage.src = cardData.link;
+        popupImage.alt = cardData.name;
         captionElement.textContent = cardData.name;
         openModal(imagePopup);
     });
