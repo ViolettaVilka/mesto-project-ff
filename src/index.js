@@ -29,7 +29,7 @@ const cardLinkInput = addFormElement.querySelector('.popup__input_type_url');
 
 //Вызов каждой карточки\\
 initialCards.forEach(cardData => {
-    const cardElement = createCard(cardData, deleteCard, likeCard, openModal, imagePopup, popupImage, captionElement);
+    const cardElement = createCard(cardData, deleteCard, likeCard, handleImageClick);
     cardList.appendChild(cardElement);
 });
 
@@ -56,6 +56,13 @@ function handleAddCardFormSubmit(evt) {
 
     closeModal(addCardPopup);
     addFormElement.reset();
+}
+
+function handleImageClick(cardData) {
+    popupImage.src = cardData.link;
+    popupImage.alt = cardData.name;
+    captionElement.textContent = cardData.name;
+    openModal(imagePopup);
 }
 
 //Закрытие попапов\\

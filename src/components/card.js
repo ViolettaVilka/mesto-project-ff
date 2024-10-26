@@ -1,4 +1,4 @@
-export function createCard(cardData, deleteCard, likeCard, openModal, imagePopup, popupImage, captionElement) {
+export function createCard(cardData, deleteCard, likeCard, handleImageClick) {
     const template = document.getElementById('card-template');
     const cardElement = template.content.cloneNode(true);
 
@@ -16,10 +16,7 @@ export function createCard(cardData, deleteCard, likeCard, openModal, imagePopup
     });
 
     imageElement.addEventListener('click', () => {
-        popupImage.src = cardData.link;
-        popupImage.alt = cardData.name;
-        captionElement.textContent = cardData.name;
-        openModal(imagePopup);
+        handleImageClick(cardData);
     });
 
     return cardElement;
