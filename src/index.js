@@ -51,7 +51,7 @@ function handleAddCardFormSubmit(evt) {
     const cardName = cardNameInput.value;
     const cardLink = cardLinkInput.value;
 
-    const newCard = createCard({ name: cardName, link: cardLink }, deleteCard, likeCard, openModal, imagePopup, popupImage, captionElement);
+    const newCard = createCard({ name: cardName, link: cardLink }, deleteCard, likeCard, handleImageClick);
     cardList.prepend(newCard);
 
     closeModal(addCardPopup);
@@ -86,7 +86,7 @@ function setupPopupCloseListeners() {
     });
 }
 
-// Добавление обработчиков
+//Добавление обработчиков\\
 editButton.addEventListener('click', () => {
     nameInput.value = nameElement.textContent;
     jobInput.value = jobElement.textContent;
