@@ -14,7 +14,29 @@
   </header>
   <main class="content">
     <section class="profile page__section">
-      <div class="profile__image" style="background-image: url(<%=require('../images/avatar.jpg')%>)"></div>
+      <div class="profile__image-container">
+        <div class="profile__image" style="background-image: url(<%=require('../images/avatar.jpg')%>)"></div>
+        <button class="profile__edit-avatar-button"></button>
+      </div>
+      <div class="popup popup_type_new-avatar">
+          <div class="popup__content popup_edit-avatar">
+              <button type="button" class="popup__close"></button>
+              <h3 class="popup__title">Обновить аватар</h3>
+              <form class="popup__form" name="new-avatar" novalidate>
+                  <input
+                      id="link"
+                      type="url"
+                      name="link"
+                      class="popup__input popup__input_type_url"
+                      placeholder="Ссылка на аватар"
+                      data-error-message="Введите правильный URL"
+                      required
+                  />
+                  <span class="link-error popup__input-error"></span>
+                  <button type="submit" class="button popup__button">Сохранить</button>
+              </form>
+          </div>
+      </div>
       <div class="profile__info">
         <h1 class="profile__title">Жак-Ив Кусто</h1>
         <button class="profile__edit-button" type="button"></button>
@@ -34,26 +56,73 @@
   </footer>
   <div class="popup popup_type_edit">
     <div class="popup__content">
-      <button type="button" class="popup__close"></button>
-      <h3 class="popup__title">Редактировать профиль</h3>
-      <form class="popup__form" name="edit-profile">
-        <input type="text" name="name" class="popup__input popup__input_type_name" placeholder="Имя" required>
-        <input type="text" name="description" class="popup__input popup__input_type_description" placeholder="Занятие" required>
-        <button type="submit" class="button popup__button">Сохранить</button>
-      </form>
+        <button type="button" class="popup__close"></button>
+        <h3 class="popup__title">Редактировать профиль</h3>
+        <form class="popup__form" name="edit-profile" novalidate>
+            <input
+                id="name"
+                type="text"
+                name="name"
+                class="popup__input popup__input_type_name"
+                minlength="2"
+                maxlength="40"
+                placeholder="Имя"
+                data-error-message="Разрешены только буквы, пробелы и дефисы"
+                required
+            />
+            <span class="name-error popup__input-error"></span>
+
+            <input
+                id="description"
+                type="text"
+                name="description"
+                class="popup__input popup__input_type_description"
+                minlength="2"
+                maxlength="200"
+                placeholder="Занятие"
+                data-error-message="Разрешены только буквы, пробелы и дефисы"
+                required
+            />
+            <span class="description-error popup__input-error"></span>
+
+            <button type="submit" class="button popup__button">Сохранить</button>
+        </form>
     </div>
-  </div>
-  <div class="popup popup_type_new-card">
+</div>
+
+<div class="popup popup_type_new-card">
     <div class="popup__content">
-      <button type="button" class="popup__close"></button>
-      <h3 class="popup__title">Новое место</h3>
-      <form class="popup__form" name="new-place">
-        <input type="text" name="place-name" class="popup__input popup__input_type_card-name" placeholder="Название" required>
-        <input type="url" name="link" class="popup__input popup__input_type_url" placeholder="Ссылка на картинку" required>
-        <button type="submit" class="button popup__button">Сохранить</button>
-      </form>
+        <button type="button" class="popup__close"></button>
+        <h3 class="popup__title">Новое место</h3>
+        <form class="popup__form" name="new-place" novalidate>
+            <input
+                id="place-name"
+                type="text"
+                name="place-name"
+                class="popup__input popup__input_type_card-name"
+                minlength="2"
+                maxlength="30"
+                placeholder="Название"
+                data-error-message="Разрешены только буквы, пробелы и дефисы"
+                required
+            />
+            <span class="place-name-error popup__input-error"></span>
+
+            <input
+                id="link"
+                type="url"
+                name="link"
+                class="popup__input popup__input_type_url"
+                placeholder="Ссылка на картинку"
+                data-error-message="Введите правильный URL"
+                required
+            />
+            <span class="link-error popup__input-error"></span>
+
+            <button type="submit" class="button popup__button">Создать</button>
+        </form>
     </div>
-  </div>
+</div>
   <div class="popup popup_type_image">
     <div class="popup__content popup__content_content_image">
       <button type="button" class="popup__close"></button>
@@ -69,7 +138,10 @@
     <div class="card__description">
       <h2 class="card__title">
       </h2>
-      <button type="button" class="card__like-button"></button>
+      <div class="card__likes">
+        <button type="button" class="card__like-button"></button>
+        <span class="card__like-count">0</span>
+      </div>
     </div>
   </li>
 </template>
