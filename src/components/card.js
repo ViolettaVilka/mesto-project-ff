@@ -1,4 +1,4 @@
-export function createCard(cardData, deleteCard, likeCard, handleImageClick, userId, cohortId, token) {
+export function createCard({cardData, deleteCard, likeCard, handleImageClick, userId}) {
     const template = document.getElementById('card-template');
     const cardElement = template.content.cloneNode(true);
 
@@ -14,7 +14,7 @@ export function createCard(cardData, deleteCard, likeCard, handleImageClick, use
         deleteButton.style.display = 'none';
     } else {
         deleteButton.addEventListener('click', (evt) => {
-            deleteCard(evt, cardData._id, cohortId, token);
+            deleteCard(evt, cardData._id);
         });
     }
 
@@ -29,7 +29,7 @@ export function createCard(cardData, deleteCard, likeCard, handleImageClick, use
     }
 
     likeButton.addEventListener('click', () => {
-        likeCard(likeButton, cardData, cohortId, token, likeCountElement);
+        likeCard(likeButton, cardData, likeCountElement);
     });
 
     imageElement.addEventListener('click', () => {
@@ -37,48 +37,4 @@ export function createCard(cardData, deleteCard, likeCard, handleImageClick, use
     });
 
     return cardElement;
-}
-
-
-
-//Удаление карточки\\
-export function deleteCard(evt, cardId, cohortId, token) {
-    const cardElement = evt.target.closest('.card');
-
-    fetch(`https://nomoreparties.co/v1/${cohortId}/cards/${cardId}`, {
-        method: 'DELETE',
-        headers: {
-            authorization: token
-        }
-    })
-    .then(res => {
-        if (res.ok) {
-            cardElement.remove();
-        } else {
-            console.error('Не удалось удалить карточку');
-        }
-    })
-}
-
-
-//Лайк\\
-export function likeCard(likeButton, cardData, cohortId, token, likeCountElement) {
-    const cardId = cardData._id;
-    const isLiked = likeButton.classList.contains('card__like-button_is-active');
-    const method = isLiked ? 'DELETE' : 'PUT';
-
-    fetch(`https://nomoreparties.co/v1/${cohortId}/cards/likes/${cardId}`, {
-        method: method,
-        headers: {
-            authorization: token
-        }
-    })
-    .then(res => res.json())
-    .then(updatedCard => {
-        likeButton.classList.toggle('card__like-button_is-active');
-        likeCountElement.textContent = updatedCard.likes.length;
-    })
-    .catch(err => {
-        console.error('Ошибка при нажатии на лайк:', err);
-    });
 }

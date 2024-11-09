@@ -13,6 +13,12 @@ const hideInputError = (formElement, inputElement, config) => {
     errorElement.textContent = '';
 };
 
+
+const disableButton = (button, config) => {
+    button.classList.add(config.inactiveButtonClass);
+    button.disabled = true;
+  };
+
 const toggleSubmitButtonState = (inputList, submitButton, config) => {
     const isValid = inputList.every((inputElement) => inputElement.validity.valid);
 
@@ -20,26 +26,13 @@ const toggleSubmitButtonState = (inputList, submitButton, config) => {
         submitButton.classList.remove(config.inactiveButtonClass);
         submitButton.removeAttribute('disabled');
     } else {
-        submitButton.classList.add(config.inactiveButtonClass);
-        submitButton.setAttribute('disabled', 'true');
+        disableButton(submitButton, config);
     }
 };
 
+  
+
 const checkInputValidity = (formElement, inputElement, config) => {
-    const regex = /^[A-Za-zА-Яа-яЁё\s-]+$/;
-
-    // Проверяем, является ли текущий input полем ссылки
-    if (inputElement.name === "link") {
-        // Для поля ссылки не применяем регулярное выражение
-        inputElement.setCustomValidity(""); // Убираем сообщение об ошибке, если оно есть
-    } else if (inputElement.value && !regex.test(inputElement.value)) {
-        // Применяем регулярное выражение только к остальным полям
-        inputElement.setCustomValidity(inputElement.dataset.errorMessage);
-    } else {
-        inputElement.setCustomValidity(""); // Убираем сообщение об ошибке
-    }
-
-    // Отображаем ошибки валидации
     if (!inputElement.validity.valid) {
         showInputError(formElement, inputElement, inputElement.validationMessage, config);
     } else {
@@ -61,6 +54,7 @@ const setEventListeners = (formElement, config) => {
     toggleSubmitButtonState(inputList, submitButton, config);
 };
 
+
 // Включение валидации для всех форм на странице
 export const enableValidation = (config) => {
     const formList = Array.from(document.querySelectorAll(config.formSelector));
@@ -72,6 +66,7 @@ export const enableValidation = (config) => {
     });
 };
 
+
 // Функция для очистки ошибок валидации и сброса состояния кнопки
 export const clearValidation = (formElement, config) => {
     const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
@@ -82,6 +77,5 @@ export const clearValidation = (formElement, config) => {
         inputElement.classList.remove(config.inputErrorClass);
     });
 
-    submitButton.classList.add(config.inactiveButtonClass);
-    submitButton.setAttribute('disabled', 'true');
+    disableButton(submitButton, config);
 };

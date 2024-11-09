@@ -23,7 +23,8 @@
               <button type="button" class="popup__close"></button>
               <h3 class="popup__title">Обновить аватар</h3>
               <form class="popup__form" name="new-avatar" novalidate>
-                  <input
+                <div class="popup__input-wrapper">
+                <input
                       id="link"
                       type="url"
                       name="link"
@@ -33,6 +34,7 @@
                       required
                   />
                   <span class="link-error popup__input-error"></span>
+                </div>
                   <button type="submit" class="button popup__button">Сохранить</button>
               </form>
           </div>
@@ -59,20 +61,23 @@
         <button type="button" class="popup__close"></button>
         <h3 class="popup__title">Редактировать профиль</h3>
         <form class="popup__form" name="edit-profile" novalidate>
+          <div class="popup__input-wrapper">  
             <input
-                id="name"
-                type="text"
-                name="name"
-                class="popup__input popup__input_type_name"
-                minlength="2"
-                maxlength="40"
-                placeholder="Имя"
-                data-error-message="Разрешены только буквы, пробелы и дефисы"
-                required
-            />
-            <span class="name-error popup__input-error"></span>
-
-            <input
+                  id="name"
+                  type="text"
+                  name="name"
+                  class="popup__input popup__input_type_name"
+                  minlength="2"
+                  maxlength="40"
+                  placeholder="Имя"
+                  pattern="^[A-Za-zА-Яа-яЁё\s\-]+$"
+                  data-error-message="Разрешены только буквы, пробелы и дефисы"
+                  required
+              />
+              <span class="name-error popup__input-error"></span>
+            </div>
+            <div class="popup__input-wrapper">  
+              <input
                 id="description"
                 type="text"
                 name="description"
@@ -80,11 +85,12 @@
                 minlength="2"
                 maxlength="200"
                 placeholder="Занятие"
+                pattern="^[A-Za-zА-Яа-яЁё\s\-]+$"
                 data-error-message="Разрешены только буквы, пробелы и дефисы"
                 required
             />
             <span class="description-error popup__input-error"></span>
-
+          </div>
             <button type="submit" class="button popup__button">Сохранить</button>
         </form>
     </div>
@@ -95,7 +101,8 @@
         <button type="button" class="popup__close"></button>
         <h3 class="popup__title">Новое место</h3>
         <form class="popup__form" name="new-place" novalidate>
-            <input
+          <div class="popup__input-wrapper">    
+          <input
                 id="place-name"
                 type="text"
                 name="place-name"
@@ -103,22 +110,24 @@
                 minlength="2"
                 maxlength="30"
                 placeholder="Название"
+                pattern="^[A-Za-zА-Яа-яЁё\s\-]+$"
                 data-error-message="Разрешены только буквы, пробелы и дефисы"
                 required
             />
             <span class="place-name-error popup__input-error"></span>
-
-            <input
-                id="link"
-                type="url"
-                name="link"
-                class="popup__input popup__input_type_url"
-                placeholder="Ссылка на картинку"
-                data-error-message="Введите правильный URL"
-                required
-            />
-            <span class="link-error popup__input-error"></span>
-
+          </div>
+            <div class="popup__input-wrapper">  
+              <input
+                  id="link"
+                  type="url"
+                  name="link"
+                  class="popup__input popup__input_type_url"
+                  placeholder="Ссылка на картинку"
+                  data-error-message="Введите правильный URL"
+                  required
+              />
+              <span class="link-error popup__input-error"></span>
+            </div>
             <button type="submit" class="button popup__button">Создать</button>
         </form>
     </div>

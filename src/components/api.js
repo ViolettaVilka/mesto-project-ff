@@ -1,68 +1,70 @@
-export const cohortId = 'wff-cohort-25';
-export const token = '17dc75d2-a7cf-4cb7-9d17-088b6b2d91b2';
+import { request } from '../utils/utils';
+export const config = {
+    headers: {
+      authorization: '17dc75d2-a7cf-4cb7-9d17-088b6b2d91b2',
+      'Content-Type': 'application/json',
+    },
+  };
 
-const userUrl = `https://nomoreparties.co/v1/${cohortId}/users/me`;
-const cardsUrl = `https://nomoreparties.co/v1/${cohortId}/cards`;
+// Удаление карточек
+export const deleteCardApi = (cardId) => {
+    return request(`/cards/${cardId}`, {
+        method: 'DELETE',
+        headers: config.headers,
+    });
+}
 
-
-export const getUserInfo = (nameElement, aboutElement, avatarElement) => {
-    return fetch(userUrl, {
-        headers: {
-            authorization: token
-        }
-    })
-    .then(res => {
-    if (res.ok) {
-        return res.json()
-        }
-    })
-    .then((userData) => {
-        nameElement.textContent = userData.name;
-        aboutElement.textContent = userData.about;
-        avatarElement.style.backgroundImage = `url(${userData.avatar})`;
-        return userData;
-    })
-    .catch((err) => {
-        console.error('Ошибка при загрузке информации о пользователе:', err)
-    })
+// Управление лайкками
+export const toggleLikeApi = (cardId, isLiked) => {
+    const method = isLiked ? 'DELETE' : 'PUT';
+    return request(`/cards/likes/${cardId}`, {
+        method: method,
+        headers: config.headers,
+    });
 }
 
 
-export const getCards = () => {
-    return fetch(cardsUrl, {
-        headers: {
-            authorization: token
-        } 
-    })
-    .then(res => {
-        if (res.ok) {
-            return res.json()
-            }
-        })
-    .catch((err) => {
-        console.log('Ошибка при загрузке карточек:', err);
-    })
+// Получение данных профиля
+export const getUserInfo = () => {
+    return request(`/users/me`, {
+        headers: config.headers
+    });
 }
 
-
-export const editUserInfo = (name, about, nameElement, aboutElement) => {
-    return fetch(userUrl, {
+// Редактирование профиля
+export const editUserInfo = (name, about) => {
+    return request(`/users/me`, {
         method: 'PATCH',
-        headers: {
-            authorization: token,
-            'Content-Type': 'application/json'
-        },
+        headers: config.headers,
         body: JSON.stringify({
             name: name,
             about: about
         })
         })
-        .then (res => res.json())
-        .then(updatedData => {
-        nameElement.textContent = updatedData.name;
-        aboutElement.textContent = updatedData.about;
-    })
-    .catch(err => {
-        console.error('Ошибка при обновлении информации о пользователе:', err);
-    });
+
 }
+
+// Получение всех карточек
+export const getCards = () => {
+    return request(`/cards`, {
+        headers: config.headers
+    })
+}
+
+// Добавление новой карточки
+export const addNewCardApi = (name, link) => {
+    return request('/cards', {
+        method: 'POST',
+        headers: config.headers,
+        body: JSON.stringify({ name, link })
+    });
+};
+
+// Обновление аватара
+export const updateAvatarApi = (url) => {
+    return request('/users/me/avatar', {
+        method: 'PATCH',
+        headers: config.headers,
+        body: JSON.stringify({ avatar: url })
+    });
+};
