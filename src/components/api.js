@@ -53,6 +53,7 @@ export const getCards = () => {
 
 // Добавление новой карточки
 export const addNewCardApi = (name, link) => {
+    console.log('name', name, 'link:', link); 
     return request('/cards', {
         method: 'POST',
         headers: config.headers,

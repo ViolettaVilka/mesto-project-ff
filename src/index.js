@@ -3,7 +3,7 @@ import { initialCards } from './cards';
 import { createCard } from './components/card.js';
 import { openModal, closeModal } from './components/modal.js';
 import { enableValidation, clearValidation } from './components/validation.js';
-import {config, getUserInfo, getCards, editUserInfo, deleteCardApi, toggleLikeApi, addNewCardApi, updateAvatarApi } from './components/api.js';
+import { config, getUserInfo, getCards, editUserInfo, deleteCardApi, toggleLikeApi, addNewCardApi, updateAvatarApi } from './components/api.js';
 import { validationConfig } from './utils/constants.js';
 import { handleSubmit } from './utils/utils.js';
 
@@ -127,12 +127,6 @@ function likeCard(likeButton, cardData, likeCountElement) {
 }
 
 
-getCards()
-.catch((err) => {
-    console.log('Ошибка при загрузке карточек:', err);
-})
-
-
 function handleImageClick(cardData) {
     popupImage.src = cardData.link;
     popupImage.alt = cardData.name;
@@ -169,23 +163,21 @@ editButton.addEventListener('click', () => {
     clearValidation(profileEditForm, validationConfig);
     openModal(profileEditPopup);
 });
-
 profileEditForm.addEventListener('submit', handleProfileEditFormSubmit);
+
 
 addButton.addEventListener('click', () => {
     clearValidation(addFormElement, validationConfig);
     openModal(addCardPopup);
 });
-
 addFormElement.addEventListener('submit', handleAddCardFormSubmit);
 
 
 editAvatarButton.addEventListener('click', () => {
-    avatarForm.addEventListener('submit', handleAvatarFormSubmit);
     clearValidation(avatarForm, validationConfig);
     openModal(avatarPopup);
 });
-
+avatarForm.addEventListener('submit', handleAvatarFormSubmit);
 
 enableValidation(validationConfig);
 setupPopupCloseListeners();
